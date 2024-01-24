@@ -31417,7 +31417,7 @@ async function run() {
         }
     }
     zip.writeZip(path.join(workspacePath, argOutput));
-    console.log(`\nZipped file ${output} successfully`);
+    console.log(`\nZipped file ${argOutput} successfully`);
 }
 
 run()
