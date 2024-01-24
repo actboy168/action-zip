@@ -14,7 +14,6 @@ async function run() {
     for await (const file of globber.globGenerator()) {
         const stats = fs.lstatSync(file);
         if (!stats.isDirectory()) {
-            core.debug(`Add file ${file}`);
             const zippath = path.relative(workspacePath, file);
             zip.addFile(zippath, fs.readFileSync(file), "", 0);
         }
