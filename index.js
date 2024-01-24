@@ -8,7 +8,7 @@ async function run() {
     const workspacePath = process.env.GITHUB_WORKSPACE;
     const argPath = core.getInput("path", { required: true });
     const argOutput = core.getInput("output", { required: true });
-    core.info(`Ready to zip "${argPath}" into ${argOutput}`);
+    core.info(`Zip path: ${argPath}`);
     const zip = new AdmZip();
     const globber = await glob.create(argPath);
     for await (const file of globber.globGenerator()) {
@@ -20,7 +20,7 @@ async function run() {
         }
     }
     zip.writeZip(path.join(workspacePath, argOutput));
-    core.info(`\nZipped file ${argOutput} successfully`);
+    core.info(`Zipped file ${argOutput} successfully`);
 }
 
 run()
