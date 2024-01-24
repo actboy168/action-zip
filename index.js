@@ -5,28 +5,22 @@ const core = require("@actions/core");
 const glob = require('@actions/glob');
 
 async function run() {
-    const workspacePath = process.env.GITHUB_WORKSPACE
-    const argPath = core.getInput("path");
-    const argOutput = core.getInput("output");
-    console.log(`Ready to zip "${argPath}" into ${argOutput}`);
+    const workspacePath = process.env.GITHUB_WORKSPACE;
+    const argPath = core.getInput("path", { required: true });
+    const argOutput = core.getInput("output", { required: true });
+    core.info(`Ready to zip "${argPath}" into ${argOutput}`);
     const zip = new AdmZip();
-    const globber = await glob.create(argPath)
+    const globber = await glob.create(argPath);
     for await (const file of globber.globGenerator()) {
         const stats = fs.lstatSync(file);
         if (!stats.isDirectory()) {
-            const zippath = path.relative(workspacePath, file); 
-            const zipdir = path.dirname(zippath);
-            const zipname = path.basename(zippath);
-            if (zipdir === ".") {
-                zip.addLocalFile(file, "", zipname);
-            }
-            else {
-                zip.addLocalFile(file, zipdir, zipname);
-            }
+            core.debug(`Add file ${file}`);
+            const zippath = path.relative(workspacePath, file);
+            zip.addFile(zippath, fs.readFileSync(file), "", 0);
         }
     }
     zip.writeZip(path.join(workspacePath, argOutput));
-    console.log(`\nZipped file ${argOutput} successfully`);
+    core.info(`\nZipped file ${argOutput} successfully`);
 }
 
 run()

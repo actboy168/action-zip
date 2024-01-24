@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "debug",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "env": {
+                "GITHUB_WORKSPACE": "${workspaceFolder}",
+                "INPUT_PATH": "*\n!node_modules/\n!.git/\n!test.zip",
+                "INPUT_OUTPUT": "test.zip"
+            },
+            "program": "${workspaceFolder}/index.js"
+        }
+    ]
+}
