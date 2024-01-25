@@ -4,9 +4,12 @@ inputs:
   path:
     description: "Files or folders to zip"
     required: true
-  output:
-    description: "Zip file"
+  name:
+    description: "Zip file name"
     required: true
+outputs:
+  output:
+    description: "Zip file path"
 runs:
   using: "node16"
   main: "dist/index.js"

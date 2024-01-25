@@ -4168,12 +4168,12 @@ module.exports = function () {
 /***/ ((__unused_webpack_module, exports, __nccwpck_require__) => {
 
 exports.EntryHeader = __nccwpck_require__(9032);
-exports.MainHeader = __nccwpck_require__(4408);
+exports.MainHeader = __nccwpck_require__(8952);
 
 
 /***/ }),
 
-/***/ 4408:
+/***/ 8952:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 var Utils = __nccwpck_require__(5182),
@@ -12725,7 +12725,7 @@ module.exports = {
 "use strict";
 
 
-const { parseSetCookie } = __nccwpck_require__(3346)
+const { parseSetCookie } = __nccwpck_require__(4408)
 const { stringify, getHeadersList } = __nccwpck_require__(3121)
 const { webidl } = __nccwpck_require__(1744)
 const { Headers } = __nccwpck_require__(554)
@@ -12911,7 +12911,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 3346:
+/***/ 4408:
 /***/ ((module, __unused_webpack_exports, __nccwpck_require__) => {
 
 "use strict";
@@ -31880,14 +31880,14 @@ var __webpack_exports__ = {};
 (() => {
 const fs = __nccwpck_require__(7147);
 const path = __nccwpck_require__(1017);
-const AdmZip = __nccwpck_require__(6761);
 const core = __nccwpck_require__(2186);
 const glob = __nccwpck_require__(8090);
+const AdmZip = __nccwpck_require__(6761);
 
 async function run() {
     const workspacePath = process.env.GITHUB_WORKSPACE;
     const argPath = core.getInput("path", { required: true });
-    const argOutput = core.getInput("output", { required: true });
+    const argName = core.getInput("name", { required: true });
     core.info(`Zip path: ${argPath}`);
     const zip = new AdmZip();
     const globber = await glob.create(argPath);
@@ -31898,8 +31898,10 @@ async function run() {
             zip.addFile(zippath, fs.readFileSync(file), "", 0);
         }
     }
-    zip.writeZip(path.join(workspacePath, argOutput));
+    const argOutput = path.join(argName, ".zip");
+    zip.writeZip(argOutput);
     core.info(`Zipped file ${argOutput} successfully`);
+    core.setOutput('output', argOutput);
 }
 
 run()
