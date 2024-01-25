@@ -1,0 +1,22 @@
+name: test
+on: push
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+    steps:
+    - uses: actions/checkout@v4
+    - uses: ./
+      id: zip
+      with:
+        name: test
+        path: |
+          *
+          !node_modules/
+          !.git/
+          !test.zip
+          !test.tar.gz
+    - run: echo ${{ steps.zip.outputs.output }}
