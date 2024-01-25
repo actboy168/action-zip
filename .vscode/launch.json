@@ -10,8 +10,8 @@
             ],
             "env": {
                 "GITHUB_WORKSPACE": "${workspaceFolder}",
-                "INPUT_PATH": "*\n!node_modules/\n!.git/\n!test.zip",
-                "INPUT_OUTPUT": "test.zip"
+                "INPUT_PATH": "*\n!node_modules/\n!.git/\n!test.zip\n!test.tar.gz",
+                "INPUT_NAME": "test"
             },
             "program": "${workspaceFolder}/index.js"
         }
